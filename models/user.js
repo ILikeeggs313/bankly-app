@@ -17,6 +17,7 @@ class User {
     );
 
     if (duplicateCheck.rows[0]) {
+      //check for a duplicate
       throw new ExpressError(
         `There already exists a user with username '${username}'`,
         400
@@ -61,7 +62,7 @@ class User {
                 admin
             FROM users 
             WHERE username = $1`,
-      [username]
+      [username, password]
     );
 
     const user = result.rows[0];
@@ -80,6 +81,7 @@ class User {
    * */
 
   static async getAll(username, password) {
+    //second bug, 
     const result = await db.query(
       `SELECT username,
                 first_name,
@@ -87,7 +89,7 @@ class User {
                 email,
                 phone
             FROM users 
-            ORDER BY username`
+            ORDER BY username`, [username, password]
     );
     return result.rows;
   }

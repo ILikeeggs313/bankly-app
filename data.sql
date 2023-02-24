@@ -6,6 +6,6 @@ CREATE TABLE users (
     email text NOT NULL,
     phone text NOT NULL,
     password text NOT NULL,
-    admin boolean DEFAULT false
+    admin boolean DEFAULT true
 );
 

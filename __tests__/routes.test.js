@@ -156,7 +156,23 @@ describe("PATCH /users/[username]", function() {
       password: expect.any(String)
     });
   });
+  //should patch data if user changes their data, first bug
+  test("should patch data if user wishes to", async () => {
+    const resp = await request(app)
+    .patch("/users/u1")
+    .send({_token: tokens.u1, first_name: "new-fn1"});
+    expect(resp.statusCode).toBe(200);
+    expect(resp.body.user).toEqual({
+      username: "u1",
+      first_name: "new-fn1",
+      last_name: "ln1",
+      email: "email1",
+      phone: "phone1",
+      admin: false,
+      password: expect.any(String)
 
+    })
+  })
   test("should disallowing patching not-allowed-fields", async function() {
     const response = await request(app)
       .patch("/users/u1")
